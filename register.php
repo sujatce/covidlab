@@ -1,5 +1,24 @@
 <?php
 include 'main.php';
+
+if(!empty($_POST['g-recaptcha-response']))
+{
+    $secret = '6LcnfgcdAAAAACeI2Cgbiv-NoG5jU3QIXZVdQ7cW';
+    $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
+    $responseData = json_decode($verifyResponse);
+    if($responseData->success)
+    {
+        $msg = "g-recaptcha varified successfully";
+        //echo 'Verified successfully';
+    }
+    else
+    {
+		$msg = "Error validating recaptcha";
+        //echo 'Error validating recaptcha';
+        exit('Error verifying g-recaptcha');
+    }
+}
+
 if (mysqli_connect_errno()) {
 	// If there is an error with the connection, stop the script and display the error.
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
