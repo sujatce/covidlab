@@ -17,6 +17,10 @@ if(!empty($_POST['g-recaptcha-response']))
         //echo 'Error validating recaptcha';
         exit('Error verifying g-recaptcha');
     }
+}else
+{
+	$msg = "reCAPTCHA is not validated, please validate it";
+	exit('reCAPTCHA is not validated, please validate it');
 }
 
 if (mysqli_connect_errno()) {
