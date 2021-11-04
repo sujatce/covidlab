@@ -15,8 +15,8 @@ define('account_activation', true);
 // Change "Your Company Name" and "yourdomain.com", do not remove the < and >
 define('mail_from', 'noreply@sujatech.com');
 // Link to activation file, update this
-define('activation_link', 'http://localhost:8080/csun/covidlab/activate.php');
-define('resetpassword_link', 'http://localhost:8080/csun/covidlab/resetpassword.php?email=');
+define('activation_link', 'http://localhost:8080/covidlab/activate.php');
+define('resetpassword_link', 'http://localhost:8080/covidlab/resetpassword.php?email=');
 // Replace smtp_username with your Amazon SES SMTP user name.
 define('usernameSmtp','AKIAXE6JT7DDW5BVAWDA');
 // Replace smtp_password with your Amazon SES SMTP password.

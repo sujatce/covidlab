@@ -36,7 +36,7 @@ $_SESSION['token'] = md5(uniqid(rand(), true));
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,minimum-scale=1">
 		<title>Login</title>
-		<link href="style.css" rel="stylesheet" type="text/css">
+		<link href="style1.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 	</head>
 	<body>
@@ -55,9 +55,9 @@ $_SESSION['token'] = md5(uniqid(rand(), true));
 					<i class="fas fa-lock"></i>
 				</label>
 				<input type="password" name="password" placeholder="Password" id="password" required>
-				<label id="rememberme">
-					<input type="checkbox" name="rememberme">Remember me
-				</label>
+				
+				<input type="checkbox" name="rememberme">Remember me
+				
 				<a href="forgotpassword.php">Forgot Password?</a>
 				<input type="hidden" name="token" value="<?=$_SESSION['token']?>">
 				<div class="msg"></div>

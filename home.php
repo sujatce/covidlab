@@ -26,6 +26,7 @@ check_loggedin($con);
 		<div class="content">
 			<h2>Home Page</h2>
 			<p class="block">Welcome back, <?=$_SESSION['name']?>!</p>
+			<p class="block">Welcome back, <?=$_SESSION['lastlogindate']?>!</p>
 		</div>
 	</body>
 </html>

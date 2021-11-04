@@ -47,6 +47,18 @@ function check_loggedin($con, $redirect_file = 'index.php') {
     	exit;
     }
 }
+
+
+function insert_login_logs($username, $status)
+{
+	echo('insert');
+	$ip = $_SERVER['REMOTE_ADDR'];
+	$stmt = $con->prepare('INSERT INTO login_logs (username,ip_address, status,logindate) VALUES (?,?,?,now())');
+				$stmt->bind_param('sss',  $username,$ip,$status);
+				$stmt->execute();
+				$stmt->close();
+				echo('insert success');
+}
 // Send activation email function
 function send_activation_email($email, $code) {
 	$subject = 'Account Activation Required';

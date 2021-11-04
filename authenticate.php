@@ -18,7 +18,7 @@ if (!isset($_POST['username'], $_POST['password'])) {
 }
 
 // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-$stmt = $con->prepare('SELECT id, password, rememberme, activation_code, role, ip, email FROM accounts WHERE username = ?');
+$stmt = $con->prepare('SELECT id, password, rememberme, activation_code, role, ip, email, counter, lastlogindate FROM accounts WHERE username = ?');
 // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
 $stmt->bind_param('s', $_POST['username']);
 $stmt->execute();
@@ -26,7 +26,7 @@ $stmt->execute();
 $stmt->store_result();
 // Check if the account exists:
 if ($stmt->num_rows > 0) {
-	$stmt->bind_result($id, $password, $rememberme, $activation_code, $role, $ip, $email);
+	$stmt->bind_result($id, $password, $rememberme, $activation_code, $role, $ip, $email,$counter,$lastlogindate);
 	$stmt->fetch();
 	$stmt->close();
 	// Account exists, now we verify the password.
@@ -48,6 +48,8 @@ if ($stmt->num_rows > 0) {
 			$_SESSION['name'] = $_POST['username'];
 			$_SESSION['id'] = $id;
 			$_SESSION['role'] = $role;
+			$_SESSION['counter'] = $counter;
+			$_SESSION['lastlogindate'] = $lastlogindate;
 			// IF the user checked the remember me check box:
 			if (isset($_POST['rememberme'])) {
 				// Create a hash that will be stored as a cookie and in the database, this will be used to identify the user.
@@ -61,6 +63,12 @@ if ($stmt->num_rows > 0) {
 				$stmt->execute();
 				$stmt->close();
 			}
+			$stmt = $con->prepare('UPDATE accounts SET lastlogindate = NOW(), counter = counter+1 WHERE id = ?');
+				$stmt->bind_param('i',  $id);
+				$stmt->execute();
+				$stmt->close();
+				$status = 'Success';
+				insert_login_logs($_POST['username'],$status);
 			echo 'Success'; // Do not change this line as it will be used to check with the AJAX code
 		}
 	} else {
@@ -73,4 +81,7 @@ if ($stmt->num_rows > 0) {
 	$login_attempts = loginAttempts($con, TRUE);
 	echo 'Incorrect username and/or password, you have ' . $login_attempts['attempts_left'] . ' attempts remaining!';
 }
+
+
+
 ?>

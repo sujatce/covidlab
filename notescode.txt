@@ -1,0 +1,8 @@
+a<div class="form-outline datepicker w-100">
+                          <input
+                            type="date"
+                            class="form-control form-control-lg"
+                            id="birthdayDate" name="birthdayDate" required
+                          />
+                          <label for="birthdayDate" class="form-label">Birthday</label>
+                        </div>

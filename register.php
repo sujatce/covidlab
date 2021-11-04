@@ -1,28 +1,5 @@
 <?php
 include 'main.php';
-
-if(!empty($_POST['g-recaptcha-response']))
-{
-    $secret = '6LcnfgcdAAAAACeI2Cgbiv-NoG5jU3QIXZVdQ7cW';
-    $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
-    $responseData = json_decode($verifyResponse);
-    if($responseData->success)
-    {
-        $msg = "g-recaptcha varified successfully";
-        //echo 'Verified successfully';
-    }
-    else
-    {
-		$msg = "Error validating recaptcha";
-        //echo 'Error validating recaptcha';
-        exit('Error verifying g-recaptcha');
-    }
-}else
-{
-	$msg = "reCAPTCHA is not validated, please validate it";
-	exit('reCAPTCHA is not validated, please validate it');
-}
-
 if (mysqli_connect_errno()) {
 	// If there is an error with the connection, stop the script and display the error.
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
@@ -66,12 +43,11 @@ if ($stmt->num_rows > 0) {
 } else {
 	$stmt->close();
 	// Username doesnt exists, insert new account
-	$stmt = $con->prepare('INSERT INTO accounts (username, password, email, activation_code, ip) VALUES (?, ?, ?, ?, ?)');
+	$stmt = $con->prepare('INSERT INTO accounts (username, password, email, activation_code) VALUES (?, ?, ?, ?)');
 	// We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
 	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 	$uniqid = account_activation ? uniqid() : 'activated';
-	$ip = $_SERVER['REMOTE_ADDR'];
-	$stmt->bind_param('sssss', $_POST['username'], $password, $_POST['email'], $uniqid, $ip);
+	$stmt->bind_param('ssss', $_POST['username'], $password, $_POST['email'], $uniqid);
 	$stmt->execute();
 	$stmt->close();
 	if (account_activation) {
