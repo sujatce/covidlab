@@ -70,7 +70,7 @@ if ($stmt->num_rows > 0) {
 				$stmt->execute();
 				$stmt->close();
 				$status = 'Success';
-				insert_login_logs($_POST['username'],$status);
+				//insert_login_logs($_POST['username'],$status);
 			echo 'Success'; // Do not change this line as it will be used to check with the AJAX code
 		}
 	} else {

@@ -85,7 +85,7 @@ if ($stmt->num_rows > 0) {
 	if (account_activation) {
 		// Account activation required, send the user the activation email with the "send_activation_email" function from the "main.php" file
 		send_activation_email($_POST['email'], $uniqid);
-		echo 'You have successfully registered, Please check your email to activate your account before logging in!';
+		echo 'You have successfully registered, Please check your email to activate your account before logging in! <a href="index.php">Login</a> ';
 	} else {
 		echo 'You have successfully registered, you can now login!';
 	}
