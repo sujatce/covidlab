@@ -44,7 +44,7 @@ $_SESSION['token'] = md5(uniqid(rand(), true));
 			<h1>Login</h1>
 			<div class="links">
 				<a href="index.php" class="active">Login</a>
-				<a href="register.html">Register</a>
+				<a href="register1.html">Register</a>
 			</div>
 			<form action="authenticate.php" method="post">
 				<label for="username">
