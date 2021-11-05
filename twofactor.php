@@ -25,7 +25,7 @@ if (isset($_GET['id'], $_GET['email'], $_GET['code'], $_SESSION['2FA']) && $_SES
                 $stmt->bind_param('si', $ip, $_GET['id']);
                 $stmt->execute();
                 $stmt->close();
-                $msg = 'Access code accepted! You can now <a href="index.php">login</a>!';
+                $msg = 'Access code accepted! Your new machine is enabled for login. You can now <a href="index.php">login</a>!';
             } else {
                 $msg = 'Incorrect code provided!';
             }
@@ -60,7 +60,7 @@ if (isset($_GET['id'], $_GET['email'], $_GET['code'], $_SESSION['2FA']) && $_SES
 	<body>
 		<div class="login">
 			<h1>Two-factor Authentication</h1>
-            <p style="padding:15px;margin:0;">Please enter the code that was sent to your email address below.</p>
+            <p style="padding:15px;margin:0;">Since you have logged in from different machine than previously recorded, Please enter the code that was sent to your email address below for additional security.</p>
 			<form action="" method="post">
                 <label for="code">
 					<i class="fas fa-lock"></i>
