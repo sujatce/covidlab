@@ -13,7 +13,7 @@
 			<h1>Register</h1>
 			<div class="links">
 				<a href="index.php">Login</a>
-				<a href="register.html" class="active">Register</a>
+				<a href="register1.html" class="active">Register</a>
 			</div>
 			<form action="register1.php" method="post" autocomplete="off">
                 <label for="Name">
@@ -31,7 +31,7 @@
 				<label for="password">
 					<i class="fas fa-lock"></i>
 				</label>
-				<input type="password" name="password" placeholder="Password" id="password" required><br>
+				<input type="password" name="password" placeholder="Password" id="password" required>
 				
 				<div id="message">
 					<h3>Password must contain the following:</h3>
@@ -39,12 +39,13 @@
 					<p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
 					<p id="number" class="invalid">A <b>number</b></p>
 					<p id="length" class="invalid">Minimum <b>8 characters</b></p>
-				</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<br>
+				</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 				<br><label for="cpassword">
 					<i class="fas fa-lock"></i>
 				</label>
-				<input type="password" name="cpassword" placeholder="Confirm Password" id="cpassword" required>
-			   
+				<input type="password" name="cpassword" size="15" maxlength="100" id="cpassword" onkeyup="return passwordChanged();"  required>
+				<span id="strength">I will show password Strength</span>
+				
 				<p> Choose your birth date</p>
                 <input type="date" name="birthdate" placeholder="Birth date" id="date" required>
 				
@@ -160,6 +161,27 @@ myInput.onkeyup = function() {
     length.classList.add("invalid");
   }
 }
+function passwordChanged() {
+        var strength = document.getElementById('strength');
+        var strongRegex = new RegExp("^(?=.{14,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+        var mediumRegex = new RegExp("^(?=.{10,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+        var enoughRegex = new RegExp("(?=.{8,}).*", "g");
+        var cpassword = document.getElementById("cpassword");
+        if (cpassword.value.length == 0) {
+            strength.innerHTML = 'Type Password';
+        } else if (false == enoughRegex.test(cpassword.value)) {
+            strength.innerHTML = 'More Characters';
+        } else if (strongRegex.test(cpassword.value)) {
+            strength.innerHTML = '<span style="color:green">Strong!</span>';
+        } else if (mediumRegex.test(cpassword.value)) {
+            strength.innerHTML = '<span style="color:orange">Medium!</span>';
+        } else {
+            strength.innerHTML = '<span style="color:red">Weak!</span>';
+        }
+    }
+</script>
+<input name="password" id="password" type="text" size="15" maxlength="100" onkeyup="return passwordChanged();" />
+<span id="strength">Type Password</span>
 		var form = document.querySelector('.register form');
 		form.onsubmit = function(event) {
 			event.preventDefault();

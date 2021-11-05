@@ -18,7 +18,7 @@ if (!isset($_POST['username'], $_POST['password'])) {
 }
 
 // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-$stmt = $con->prepare('SELECT id, password, rememberme, activation_code, role, ip, email, counter, lastlogindate FROM accounts WHERE username = ?');
+$stmt = $con->prepare('SELECT id, password, rememberme, activation_code, role, ip, email, counter, lastlogindate,firstname,lastname FROM accounts WHERE username = ?');
 // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
 $stmt->bind_param('s', $_POST['username']);
 $stmt->execute();
@@ -26,7 +26,7 @@ $stmt->execute();
 $stmt->store_result();
 // Check if the account exists:
 if ($stmt->num_rows > 0) {
-	$stmt->bind_result($id, $password, $rememberme, $activation_code, $role, $ip, $email,$counter,$lastlogindate);
+	$stmt->bind_result($id, $password, $rememberme, $activation_code, $role, $ip, $email,$counter,$lastlogindate,$firstname,$lastname);
 	$stmt->fetch();
 	$stmt->close();
 	// Account exists, now we verify the password.
@@ -50,6 +50,8 @@ if ($stmt->num_rows > 0) {
 			$_SESSION['role'] = $role;
 			$_SESSION['counter'] = $counter;
 			$_SESSION['lastlogindate'] = $lastlogindate;
+			$_SESSION['firstname'] = $firstname;
+			$_SESSION['lastname'] = $lastname;
 			// IF the user checked the remember me check box:
 			if (isset($_POST['rememberme'])) {
 				// Create a hash that will be stored as a cookie and in the database, this will be used to identify the user.
