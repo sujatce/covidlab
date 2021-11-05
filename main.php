@@ -53,7 +53,7 @@ function insert_login_logs($username, $status)
 {
 	echo('insert');
 	$ip = $_SERVER['REMOTE_ADDR'];
-	$stmt = $con->prepare('INSERT INTO login_logs (username,ip_address, status,logindate) VALUES (?,?,?,now())');
+	$stmt = $con->prepare('INSERT INTO login_logs (username,ip_address, status) VALUES (?,?,?)');
 				$stmt->bind_param('sss',  $username,$ip,$status);
 				$stmt->execute();
 				$stmt->close();

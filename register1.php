@@ -67,7 +67,7 @@ if ($stmt->num_rows > 0) {
 } else {
 	$stmt->close();
 	// Username doesnt exists, insert new account
-	$stmt = $con->prepare('INSERT INTO accounts (username, password, email,activation_code, firstname,lastname, birthdate	,sq1,sa1,sq2,sa2,sq3, sa3) VALUES (?, ?, ?, ?, ?,?, ?, ?, ?, ?,?, ?, ?)');
+	$stmt = $con->prepare('INSERT INTO accounts (username, password, email,activation_code, firstname,lastname, birthdate	,sq1,sa1,sq2,sa2,sq3, sa3,ip) VALUES (?, ?, ?, ?, ?,?, ?, ?, ?, ?,?, ?, ?,?)');
 	// We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
 	//$stmt->store_result();
 	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -75,7 +75,7 @@ if ($stmt->num_rows > 0) {
 	$ip = $_SERVER['REMOTE_ADDR'];
 	//$stmt->bind_param('sssssssiissssss',$_POST['username'], $password, $_POST['email'], $uniqid,$_POST['fname'],$_POST['lname'],$_POST['birthdate'],$_POST[''],$_POST[''], $_POST['sq1'],$_POST['ans1'],$_POST['sq2'],$_POST['ans2'], $_POST['sq3'], $_POST['ans3']);
 	//$password
-	  $stmt->bind_param('sssssssssssss',$_POST['username'], $password, $_POST['email'], $uniqid,$_POST['fname'],$_POST['lname'],$_POST['birthdate'], $_POST['sq1'],$_POST['ans1'],$_POST['sq2'],$_POST['ans2'], $_POST['sq3'], $_POST['ans3']);
+	  $stmt->bind_param('ssssssssssssss',$_POST['username'], $password, $_POST['email'], $uniqid,$_POST['fname'],$_POST['lname'],$_POST['birthdate'], $_POST['sq1'],$_POST['ans1'],$_POST['sq2'],$_POST['ans2'], $_POST['sq3'], $_POST['ans3'],$ip);
 	  if (false === $stmt) {
 		// Log the error and handle it:
 		error_log('Could not create a statement:' . $conn->error);
